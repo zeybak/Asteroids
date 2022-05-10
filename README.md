@@ -14,7 +14,6 @@ Unity 2020.2.7f1
 - Lives
 - Hyper Space
 - UFO
-- Screen borders teleportation
 - Power-Ups
 - VFXs
 - SFXs
