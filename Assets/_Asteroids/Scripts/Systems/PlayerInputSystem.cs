@@ -22,12 +22,14 @@ namespace _Asteroids.Scripts.Systems
             {
                 inputData.HorizontalInput = Input.GetAxis(HorizontalAxisName);
                 inputData.VerticalInput = Input.GetAxis(VerticalAxisName);
-                
+
                 if (_camera)
                 {
                     inputData.MouseInput = _camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                         Input.mousePosition.y, _camera.transform.position.y));
                 }
+                else
+                    _camera = Camera.main;
             });
         }
     }
