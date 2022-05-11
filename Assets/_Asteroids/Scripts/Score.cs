@@ -1,18 +1,28 @@
 ﻿using System;
+using UnityEngine;
 
 namespace _Asteroids.Scripts
 {
     public static class Score
     {
-        public static int CurrentScore { get; private set; } = 0;
+        private static int _currentScore;
+        public static int CurrentScore
+        {
+            get => _currentScore;
+            set
+            {
+                _currentScore = value;
+                OnCurrentScoreChanged?.Invoke();
+            }
+        }
+
+        private const string HighScorePrefsName = "HighScore";
+        public static int HighScore
+        {
+            get => PlayerPrefs.HasKey(HighScorePrefsName) ? PlayerPrefs.GetInt(HighScorePrefsName) : 0;
+            set => PlayerPrefs.SetInt(HighScorePrefsName, value);
+        }
 
         public static event Action OnCurrentScoreChanged;
-
-        public static void AddScore(int scoreToAdd)
-        {
-            CurrentScore += scoreToAdd;
-            
-            OnCurrentScoreChanged?.Invoke();
-        }
     }
 }

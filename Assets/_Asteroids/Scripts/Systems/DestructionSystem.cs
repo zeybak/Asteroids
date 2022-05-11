@@ -20,11 +20,6 @@ namespace _Asteroids.Scripts.Systems
                 bGameOver = true;
             });
             
-            Entities.ForEach((ref DestroyTag destroyTag, ref AddScoreOnDestructionData addScoreOnDestructionData) =>
-            {
-                Score.AddScore(addScoreOnDestructionData.ScoreToAdd);
-            });
-            
             var entityCommandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
             if (bGameOver)
@@ -36,6 +31,11 @@ namespace _Asteroids.Scripts.Systems
             }
             else
             {
+                Entities.ForEach((ref DestroyTag destroyTag, ref AddScoreOnDestructionData addScoreOnDestructionData) =>
+                {
+                    Score.CurrentScore += addScoreOnDestructionData.ScoreToAdd;
+                });
+                
                 Entities.ForEach((Entity entity, ref DestroyTag destroyTag) =>
                 {
                     entityCommandBuffer.DestroyEntity(entity);
@@ -45,7 +45,15 @@ namespace _Asteroids.Scripts.Systems
             entityCommandBuffer.Playback(World.DefaultGameObjectInjectionWorld.EntityManager);
             entityCommandBuffer.Dispose();
 
-            if (bGameOver) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            if (bGameOver)
+            {
+                if (Score.CurrentScore > Score.HighScore)
+                    Score.HighScore = Score.CurrentScore;
+
+                Score.CurrentScore = 0;
+                    
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            }
         }
     }
 }
