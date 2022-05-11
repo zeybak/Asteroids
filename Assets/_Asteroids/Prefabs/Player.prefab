@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3813162250196737941}
   - component: {fileID: 7472000373475699510}
   - component: {fileID: 4182549664857267553}
+  - component: {fileID: 3751872809429915922}
   - component: {fileID: 1426125286455892363}
   - component: {fileID: 4865817648998158117}
   - component: {fileID: 2379705780723141757}
@@ -113,8 +114,20 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3751872809429915922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952890761629368267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc8359a7b0d4ffba5fc072c0dc570fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1426125286455892363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c58e8d72b8842679de332c1f0a9613a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 5
   HorizontalInput: 0
   VerticalInput: 0
   MouseInput:
@@ -145,7 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41054f5ea4a240f3b1051c8b2ea963ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletEntity: {fileID: 6952890761629368267, guid: bd2e52fca771edc4e88935a34907ca84, type: 3}
+  BulletEntity: {fileID: 6952890761629368267, guid: bd2e52fca771edc4e88935a34907ca84, type: 3}
+  BulletSpeed: 15
 --- !u!114 &2379705780723141757
 MonoBehaviour:
   m_ObjectHideFlags: 0

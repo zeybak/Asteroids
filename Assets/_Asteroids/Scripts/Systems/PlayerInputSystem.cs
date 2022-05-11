@@ -6,9 +6,8 @@ namespace _Asteroids.Scripts.Systems
 {
     public class PlayerInputSystem : ComponentSystem
     {
-        // @TODO: Move to data
-        private const string HorizontalAxisName = "Horizontal";
-        private const string VerticalAxisName = "Vertical";
+        private const string HorizontalMovementInputName = "Horizontal";
+        private const string VerticalMovementInputName = "Vertical";
         private Camera _camera;
 
         protected override void OnStartRunning()
@@ -18,10 +17,10 @@ namespace _Asteroids.Scripts.Systems
 
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref PlayerInputData inputData) =>
+            Entities.ForEach((ref PlayerMovementData inputData) =>
             {
-                inputData.HorizontalInput = Input.GetAxis(HorizontalAxisName);
-                inputData.VerticalInput = Input.GetAxis(VerticalAxisName);
+                inputData.HorizontalInput = Input.GetAxis(HorizontalMovementInputName);
+                inputData.VerticalInput = Input.GetAxis(VerticalMovementInputName);
 
                 if (_camera)
                 {

@@ -6,8 +6,7 @@ Unity 2020.2.7f1
 
 ## TO-DO
 
-- Asteroids
-- Asteroids sub-division
+- LifeSpan
 - Thrust
 - Score
 - HighScore
@@ -15,6 +14,7 @@ Unity 2020.2.7f1
 - Hyper Space
 - UFO
 - Power-Ups
+- Art replacement
 - VFXs
 - SFXs
 - Polish

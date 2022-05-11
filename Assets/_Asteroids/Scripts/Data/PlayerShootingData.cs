@@ -5,6 +5,7 @@ namespace _Asteroids.Scripts.Data
     [GenerateAuthoringComponent]
     public struct PlayerShootingData : IComponentData
     {
-        public Entity bulletEntity;
+        public Entity BulletEntity;
+        public float BulletSpeed;
     }
 }

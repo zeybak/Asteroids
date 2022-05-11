@@ -1,8 +1,5 @@
-﻿using _Asteroids.Scripts.Data;
-using Unity.Collections;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Jobs;
-using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
