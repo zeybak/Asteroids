@@ -7,7 +7,6 @@ Unity 2020.2.7f1
 ## TO-DO
 
 - Thrust
-- Score
 - HighScore
 - Lives
 - Hyper Space

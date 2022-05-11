@@ -3,7 +3,7 @@
 namespace _Asteroids.Scripts.Data
 {
     [GenerateAuthoringComponent]
-    public struct ConstantMovementSpeed : IComponentData
+    public struct ConstantMovementSpeedData : IComponentData
     {
         public float Speed;
     }

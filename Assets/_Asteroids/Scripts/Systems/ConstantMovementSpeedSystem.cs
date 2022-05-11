@@ -10,7 +10,7 @@ namespace _Asteroids.Scripts.Systems
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref ConstantMovementSpeed constantMovementSpeed, ref PhysicsVelocity physicsVelocity) =>
+            Entities.ForEach((ref ConstantMovementSpeedData constantMovementSpeed, ref PhysicsVelocity physicsVelocity) =>
             {
                 if (physicsVelocity.Linear.x != 0f) return;
                 if (physicsVelocity.Linear.z != 0f) return;
