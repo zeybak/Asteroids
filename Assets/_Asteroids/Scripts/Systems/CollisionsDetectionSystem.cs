@@ -12,17 +12,23 @@ namespace _Asteroids.Scripts.Systems
 {
     public class CollisionsDetectionSystem : JobComponentSystem
     {
-        [BurstCompile]
         private struct CollisionDetectionJob : ITriggerEventsJob
         {
-            public EntityCommandBuffer EntityCommandBuffer;
+            [ReadOnly(true)] public EntityCommandBuffer EntityCommandBuffer;
             [ReadOnly(true)] public ComponentDataFromEntity<SpawnOnDestructionData> SpawnOnDestructionEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<Translation> TranslationEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<EnemyTag> EnemyEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<AllyTag> AllyEntities;
+            [ReadOnly(true)] public ComponentDataFromEntity<DestroyTag> EntitiesToBeDestroyed;
 
             public void Execute(TriggerEvent triggerEvent)
             {
+                if (!TranslationEntities.HasComponent(triggerEvent.EntityA)) return;
+                if (!TranslationEntities.HasComponent(triggerEvent.EntityB)) return;
+                
+                if (EntitiesToBeDestroyed.HasComponent(triggerEvent.EntityA)) return;
+                if (EntitiesToBeDestroyed.HasComponent(triggerEvent.EntityB)) return;
+                
                 if (EnemyEntities.HasComponent(triggerEvent.EntityA) &&
                     EnemyEntities.HasComponent(triggerEvent.EntityB)) return;
                 if (AllyEntities.HasComponent(triggerEvent.EntityA) &&
@@ -44,8 +50,8 @@ namespace _Asteroids.Scripts.Systems
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityA);
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityB);
                 
-                EntityCommandBuffer.DestroyEntity(triggerEvent.EntityA);
-                EntityCommandBuffer.DestroyEntity(triggerEvent.EntityB);
+                EntityCommandBuffer.AddComponent(triggerEvent.EntityA, new DestroyTag());
+                EntityCommandBuffer.AddComponent(triggerEvent.EntityB, new DestroyTag());
             }
         }
 
@@ -68,7 +74,8 @@ namespace _Asteroids.Scripts.Systems
                 SpawnOnDestructionEntities = GetComponentDataFromEntity<SpawnOnDestructionData>(),
                 TranslationEntities = GetComponentDataFromEntity<Translation>(),
                 EnemyEntities = GetComponentDataFromEntity<EnemyTag>(),
-                AllyEntities = GetComponentDataFromEntity<AllyTag>()
+                AllyEntities = GetComponentDataFromEntity<AllyTag>(),
+                EntitiesToBeDestroyed = GetComponentDataFromEntity<DestroyTag>()
             };
 
             var jobHandle = job.Schedule(_stepPhysicsWorld.Simulation, ref _buildPhysicsWorld.PhysicsWorld, inputDeps);
