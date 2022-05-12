@@ -2,6 +2,8 @@
 using _Asteroids.Scripts.Tags;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine.SceneManagement;
 
 namespace _Asteroids.Scripts.Systems
@@ -13,9 +15,20 @@ namespace _Asteroids.Scripts.Systems
             var bGameOver = false;
             
             // @TODO: Implement lives system and end game screen
-            Entities.ForEach((ref DestroyTag destroyTag, ref PlayerMovementData playerMovementData) =>
+            Entities.ForEach((Entity entity, ref DestroyTag destroyTag, ref PlayerLivesData playerLivesData, ref Translation translation) =>
             {
-                bGameOver = true;
+                playerLivesData.LivesLeft--;
+
+                if (playerLivesData.LivesLeft <= 0) 
+                    bGameOver = true;
+                else
+                {
+                    var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+                    entityManager.RemoveComponent<DestroyTag>(entity);
+
+                    translation.Value = new float3(0, 0, 0);
+                }
             });
             
             var entityCommandBuffer = new EntityCommandBuffer(Allocator.TempJob);
@@ -37,7 +50,7 @@ namespace _Asteroids.Scripts.Systems
                 Entities.ForEach((Entity entity, ref DestroyTag destroyTag) =>
                 {
                     entityCommandBuffer.DestroyEntity(entity);
-                });   
+                });
             }
             
             entityCommandBuffer.Playback(World.DefaultGameObjectInjectionWorld.EntityManager);

@@ -14,11 +14,12 @@ GameObject:
   - component: {fileID: 7472000373475699510}
   - component: {fileID: 4182549664857267553}
   - component: {fileID: 3751872809429915922}
+  - component: {fileID: 745764780382789886}
   - component: {fileID: 1426125286455892363}
   - component: {fileID: 4865817648998158117}
   - component: {fileID: 2379705780723141757}
   m_Layer: 0
-  m_Name: Player
+  m_Name: P_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc8359a7b0d4ffba5fc072c0dc570fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &745764780382789886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952890761629368267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de6349fa4da4796ad6b4422755e0ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LivesLeft: 5
 --- !u!114 &1426125286455892363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,12 +155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  HorizontalInput: 0
-  VerticalInput: 0
-  MouseInput:
-    x: 0
-    y: 0
-    z: 0
 --- !u!114 &4865817648998158117
 MonoBehaviour:
   m_ObjectHideFlags: 0
