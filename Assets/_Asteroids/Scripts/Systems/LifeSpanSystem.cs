@@ -1,6 +1,5 @@
 ﻿using _Asteroids.Scripts.Data;
 using _Asteroids.Scripts.Tags;
-using Unity.Collections;
 using Unity.Entities;
 
 namespace _Asteroids.Scripts.Systems

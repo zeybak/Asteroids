@@ -2,8 +2,6 @@
 using _Asteroids.Scripts.Tags;
 using Unity.Collections;
 using Unity.Entities;
-using UnityEditor.SceneManagement;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _Asteroids.Scripts.Systems

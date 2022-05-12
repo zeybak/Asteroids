@@ -1,24 +1,24 @@
 ﻿using _Asteroids.Scripts.Data;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Asteroids.Scripts.Systems
 {
     public class PlayerMovementSystem : ComponentSystem
     {
+        private const string HorizontalMovementInputName = "Horizontal";
+        private const string VerticalMovementInputName = "Vertical";
+        
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref PhysicsVelocity physicsVelocity, ref PlayerMovementData movementData, ref Rotation rotation, ref Translation translation) =>
+            Entities.ForEach((ref PhysicsVelocity physicsVelocity, ref PlayerMovementData movementData) =>
             {
-                physicsVelocity.Linear.x = movementData.HorizontalInput * movementData.Speed;
-                physicsVelocity.Linear.z = movementData.VerticalInput * movementData.Speed;
-
-                var playerLocation = new Vector3(translation.Value.x, translation.Value.y, translation.Value.z);
-                var forwardDirection = (new Vector3(movementData.MouseInput.x, movementData.MouseInput.y, movementData.MouseInput.z) - playerLocation).normalized;
-
-                rotation.Value = Quaternion.LookRotation(forwardDirection, Vector3.up);
+                physicsVelocity.Linear.x = Input.GetAxis(HorizontalMovementInputName) * movementData.Speed;
+                physicsVelocity.Linear.z = Input.GetAxis(VerticalMovementInputName) * movementData.Speed;
             });
         }
     }

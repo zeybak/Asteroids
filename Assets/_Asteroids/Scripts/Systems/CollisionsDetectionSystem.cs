@@ -12,6 +12,7 @@ namespace _Asteroids.Scripts.Systems
 {
     public class CollisionsDetectionSystem : JobComponentSystem
     {
+        [BurstCompile]
         private struct CollisionDetectionJob : ITriggerEventsJob
         {
             [ReadOnly(true)] public EntityCommandBuffer EntityCommandBuffer;

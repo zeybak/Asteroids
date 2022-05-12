@@ -1,5 +1,4 @@
 ﻿using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace _Asteroids.Scripts.Data
@@ -9,10 +8,5 @@ namespace _Asteroids.Scripts.Data
     {
         [Header("Settings")] 
         public float Speed;
-        
-        [Header("Debug")]
-        public float HorizontalInput;
-        public float VerticalInput;
-        public float3 MouseInput;
     }
 }
