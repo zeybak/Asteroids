@@ -4,13 +4,16 @@ using UnityEngine;
 namespace _Asteroids.Scripts.Data
 {
     [GenerateAuthoringComponent]
-    public struct EnemySpawnData : IComponentData
+    public struct SpawnOverTimeData : IComponentData
     {
         [Header("Settings")]
-        public Entity EnemyToSpawn;
+        public Entity EntityToSpawn;
         public float SpawnRate;
+        public bool bShouldSpawnOnEdge;
         
         [Header("Debug")]
         public double LastSpawnTime;
+
+        public double TimeAlive;
     }
 }

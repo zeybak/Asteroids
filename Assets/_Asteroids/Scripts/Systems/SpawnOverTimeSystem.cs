@@ -42,37 +42,40 @@ namespace _Asteroids.Scripts.Systems
             else
                 _camera = Camera.main;
             
-            Entities.ForEach((ref EnemySpawnData spawnData) =>
+            Entities.ForEach((ref SpawnOverTimeData spawnData, ref Translation translation) =>
             {
-                if (!bScreenDataFound) return;
+                spawnData.TimeAlive += Time.DeltaTime;
                 
-                var timeSinceLastSpawn = Time.ElapsedTime - spawnData.LastSpawnTime;
+                var timeSinceLastSpawn = spawnData.TimeAlive - spawnData.LastSpawnTime;
                 var bShouldSpawnNewEntity = timeSinceLastSpawn >= spawnData.SpawnRate;
 
                 if (!bShouldSpawnNewEntity) return;
                 
                 var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                var entity = entityManager.Instantiate(spawnData.EnemyToSpawn);
+                var newEntity = entityManager.Instantiate(spawnData.EntityToSpawn);
                 
-                var sideToSpawn = Random.Range(0, 4);
-                var spawnTranslation = new Translation
+                spawnData.LastSpawnTime = spawnData.TimeAlive;
+
+                var spawnTranslation = translation;
+
+                if (spawnData.bShouldSpawnOnEdge && bScreenDataFound)
                 {
-                    Value = sideToSpawn switch
+                    var sideToSpawn = Random.Range(0, 4);
+                    spawnTranslation.Value = sideToSpawn switch
                     {
                         // left-side
                         0 => new float3(minHorizontalLocation, 0f, Random.Range(minVerticalLocation, maxVerticalLocation)),
                         // right-side
                         1 => new float3(maxHorizontalLocation, 0f, Random.Range(minVerticalLocation, maxVerticalLocation)),
                         // top-side
-                        2 => new float3(Random.Range(minHorizontalLocation, maxHorizontalLocation), 0f, maxVerticalLocation),
+                        2 => new float3(Random.Range(minHorizontalLocation, maxHorizontalLocation), 0f,
+                            maxVerticalLocation),
                         // bottom-side
                         _ => new float3(Random.Range(minHorizontalLocation, maxHorizontalLocation), 0f, minVerticalLocation)
-                    }
-                };
+                    };
+                }
 
-                entityManager.SetComponentData(entity, spawnTranslation);
-
-                spawnData.LastSpawnTime = Time.ElapsedTime;
+                entityManager.SetComponentData(newEntity, spawnTranslation);
             });
         }
     }

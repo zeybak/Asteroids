@@ -8,7 +8,6 @@ Unity 2020.2.7f1
 
 - Lives
 - Hyper Space
-- UFO
 - Power-Ups
 - Art replacement
 - VFXs
