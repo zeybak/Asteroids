@@ -1,5 +1,4 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
 using UnityEngine;
 
 namespace _Asteroids.Scripts.Behaviours
@@ -11,7 +10,7 @@ namespace _Asteroids.Scripts.Behaviours
 
         private BlobAssetStore _blobAssetStore;
 
-        public Entity PlayerEntity { get; private set; }
+        public static Entity PlayerEntity { get; private set; }
 
         private void Awake()
         {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using _Asteroids.Scripts.Behaviours;
 using _Asteroids.Scripts.Data;
 using _Asteroids.Scripts.Tags;
 using Unity.Burst;
@@ -22,6 +23,7 @@ namespace _Asteroids.Scripts.Systems
             [ReadOnly(true)] public ComponentDataFromEntity<AllyTag> AllyEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<PickupTag> PickupEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<DestroyTag> EntitiesToBeDestroyed;
+            [ReadOnly(true)] public Entity PlayerEntity;
 
             public void Execute(TriggerEvent triggerEvent)
             {
@@ -36,10 +38,10 @@ namespace _Asteroids.Scripts.Systems
                 if (AllyEntities.HasComponent(triggerEvent.EntityA) &&
                     AllyEntities.HasComponent(triggerEvent.EntityB)) return;
 
-                if (EnemyEntities.HasComponent(triggerEvent.EntityA) &&
-                    PickupEntities.HasComponent(triggerEvent.EntityB)) return;
-                if (EnemyEntities.HasComponent(triggerEvent.EntityB) &&
-                    PickupEntities.HasComponent(triggerEvent.EntityA)) return;
+                if (PickupEntities.HasComponent(triggerEvent.EntityA) &&
+                    !PlayerEntity.Equals(triggerEvent.EntityB)) return;
+                if (PickupEntities.HasComponent(triggerEvent.EntityB) &&
+                    !PlayerEntity.Equals(triggerEvent.EntityA)) return;
 
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityA);
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityB);
@@ -86,7 +88,8 @@ namespace _Asteroids.Scripts.Systems
                 EnemyEntities = GetComponentDataFromEntity<EnemyTag>(),
                 AllyEntities = GetComponentDataFromEntity<AllyTag>(),
                 PickupEntities = GetComponentDataFromEntity<PickupTag>(),
-                EntitiesToBeDestroyed = GetComponentDataFromEntity<DestroyTag>()
+                EntitiesToBeDestroyed = GetComponentDataFromEntity<DestroyTag>(),
+                PlayerEntity = PlayerSpawner.PlayerEntity
             };
 
             var jobHandle = job.Schedule(_stepPhysicsWorld.Simulation, ref _buildPhysicsWorld.PhysicsWorld, inputDeps);

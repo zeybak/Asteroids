@@ -1,7 +1,6 @@
 ﻿using _Asteroids.Scripts.Data;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
