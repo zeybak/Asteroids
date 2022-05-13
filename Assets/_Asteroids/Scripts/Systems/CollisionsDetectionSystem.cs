@@ -20,6 +20,7 @@ namespace _Asteroids.Scripts.Systems
             [ReadOnly(true)] public ComponentDataFromEntity<Translation> TranslationEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<EnemyTag> EnemyEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<AllyTag> AllyEntities;
+            [ReadOnly(true)] public ComponentDataFromEntity<PickupTag> PickupEntities;
             [ReadOnly(true)] public ComponentDataFromEntity<DestroyTag> EntitiesToBeDestroyed;
 
             public void Execute(TriggerEvent triggerEvent)
@@ -34,25 +35,33 @@ namespace _Asteroids.Scripts.Systems
                     EnemyEntities.HasComponent(triggerEvent.EntityB)) return;
                 if (AllyEntities.HasComponent(triggerEvent.EntityA) &&
                     AllyEntities.HasComponent(triggerEvent.EntityB)) return;
-                
-                void CheckSpawnOnDestruction(ComponentDataFromEntity<SpawnOnDestructionData> spawnOnDestructionEntities, ComponentDataFromEntity<Translation> translationEntities, EntityCommandBuffer entityCommandBuffer, Entity entity)
-                {
-                    if (!spawnOnDestructionEntities.HasComponent(entity)) return;
-                    if (!translationEntities.HasComponent(entity)) return;
 
-                    for (var i = 0; i < spawnOnDestructionEntities[entity].SpawnAmount; i++)
-                    {
-                        var newEntity = entityCommandBuffer.Instantiate(spawnOnDestructionEntities[entity].EntityToSpawn);
-                    
-                        entityCommandBuffer.AddComponent(newEntity, new Translation() { Value = translationEntities[entity].Value});
-                    }
-                }
-                
+                if (EnemyEntities.HasComponent(triggerEvent.EntityA) &&
+                    PickupEntities.HasComponent(triggerEvent.EntityB)) return;
+                if (EnemyEntities.HasComponent(triggerEvent.EntityB) &&
+                    PickupEntities.HasComponent(triggerEvent.EntityA)) return;
+
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityA);
                 CheckSpawnOnDestruction(SpawnOnDestructionEntities, TranslationEntities, EntityCommandBuffer, triggerEvent.EntityB);
                 
-                EntityCommandBuffer.AddComponent(triggerEvent.EntityA, new DestroyTag());
-                EntityCommandBuffer.AddComponent(triggerEvent.EntityB, new DestroyTag());
+                if (!PickupEntities.HasComponent(triggerEvent.EntityB))
+                    EntityCommandBuffer.AddComponent(triggerEvent.EntityA, new DestroyTag());
+                
+                if (!PickupEntities.HasComponent(triggerEvent.EntityA))
+                    EntityCommandBuffer.AddComponent(triggerEvent.EntityB, new DestroyTag());
+            }
+            
+            private void CheckSpawnOnDestruction(ComponentDataFromEntity<SpawnOnDestructionData> spawnOnDestructionEntities, ComponentDataFromEntity<Translation> translationEntities, EntityCommandBuffer entityCommandBuffer, Entity entity)
+            {
+                if (!spawnOnDestructionEntities.HasComponent(entity)) return;
+                if (!translationEntities.HasComponent(entity)) return;
+
+                for (var i = 0; i < spawnOnDestructionEntities[entity].SpawnAmount; i++)
+                {
+                    var newEntity = entityCommandBuffer.Instantiate(spawnOnDestructionEntities[entity].EntityToSpawn);
+                    
+                    entityCommandBuffer.AddComponent(newEntity, new Translation() { Value = translationEntities[entity].Value});
+                }
             }
         }
 
@@ -76,6 +85,7 @@ namespace _Asteroids.Scripts.Systems
                 TranslationEntities = GetComponentDataFromEntity<Translation>(),
                 EnemyEntities = GetComponentDataFromEntity<EnemyTag>(),
                 AllyEntities = GetComponentDataFromEntity<AllyTag>(),
+                PickupEntities = GetComponentDataFromEntity<PickupTag>(),
                 EntitiesToBeDestroyed = GetComponentDataFromEntity<DestroyTag>()
             };
 

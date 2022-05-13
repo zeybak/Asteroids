@@ -12,22 +12,28 @@ namespace _Asteroids.Scripts.Systems
     {
         protected override void OnUpdate()
         {
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             var bGameOver = false;
             
-            // @TODO: Implement lives system and end game screen
             Entities.ForEach((Entity entity, ref DestroyTag destroyTag, ref PlayerLivesData playerLivesData, ref Translation translation) =>
             {
+                if (playerLivesData.InvulnerabilityTimeRemaining > 0f)
+                {
+                    entityManager.RemoveComponent<DestroyTag>(entity);
+                    return;
+                }
+                
                 playerLivesData.LivesLeft--;
 
                 if (playerLivesData.LivesLeft <= 0) 
                     bGameOver = true;
                 else
                 {
-                    var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
                     entityManager.RemoveComponent<DestroyTag>(entity);
 
                     translation.Value = new float3(0, 0, 0);
+
+                    playerLivesData.InvulnerabilityTimeRemaining += playerLivesData.RespawnInvulnerabilityTime;
                 }
             });
             
