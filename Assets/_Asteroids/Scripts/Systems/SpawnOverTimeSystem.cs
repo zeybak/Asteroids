@@ -45,6 +45,10 @@ namespace _Asteroids.Scripts.Systems
             Entities.ForEach((ref SpawnOverTimeData spawnData, ref Translation translation) =>
             {
                 spawnData.TimeAlive += Time.DeltaTime;
+
+                spawnData.SpawnRate -= Time.DeltaTime * spawnData.SpawnRateDecreaseOverTime;
+                if (spawnData.SpawnRate < spawnData.MinSpawnRate)
+                    spawnData.SpawnRate = spawnData.MinSpawnRate;
                 
                 var timeSinceLastSpawn = spawnData.TimeAlive - spawnData.LastSpawnTime;
                 var bShouldSpawnNewEntity = timeSinceLastSpawn >= spawnData.SpawnRate;

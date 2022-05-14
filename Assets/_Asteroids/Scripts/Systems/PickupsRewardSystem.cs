@@ -42,6 +42,17 @@ namespace _Asteroids.Scripts.Systems
                 
                 entityManager.SetComponentData(playerEntity, playerShootingData);
             });
+            
+            Entities.ForEach((ref DestroyTag destroyTag, ref LifePickupTag lifePickupTag, ref LifeSpanData lifeSpanData) =>
+            {
+                if (lifeSpanData.TimeLeft <= 0f) return;
+                
+                if (!entityManager.HasComponent<PlayerLivesData>(playerEntity)) return;
+
+                var playerLivesData = entityManager.GetComponentData<PlayerLivesData>(playerEntity);
+                playerLivesData.LivesLeft++;
+                entityManager.SetComponentData(playerEntity, playerLivesData);
+            });
         }
     }
 }

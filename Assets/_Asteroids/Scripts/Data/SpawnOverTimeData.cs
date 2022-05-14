@@ -10,6 +10,8 @@ namespace _Asteroids.Scripts.Data
         public Entity EntityToSpawn;
         public float SpawnRate;
         public bool bShouldSpawnOnEdge;
+        public float SpawnRateDecreaseOverTime;
+        public float MinSpawnRate;
         
         [Header("Debug")]
         public double LastSpawnTime;
