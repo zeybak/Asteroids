@@ -21,14 +21,19 @@ namespace _Asteroids.Scripts.Systems
         {
             Entities.ForEach((ref PlayerShootingData playerShootingData, ref PlayerMovementData movementData, ref Translation translation) =>
             {
-                if (!Input.GetButtonDown(FireInputName)) return;
+                if (!Input.GetButton(FireInputName)) return;
                 
                 if (!_camera)
                 {
                     _camera = Camera.main;
                     if (!_camera) return;
                 }
-                
+
+                if (Time.ElapsedTime - playerShootingData.LastShootingTime < playerShootingData.Ratio)
+                    return;
+
+                playerShootingData.LastShootingTime = Time.ElapsedTime;
+
                 var playerLocation = new Vector3(translation.Value.x, translation.Value.y, translation.Value.z);
                 var mouseLocation = _camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y));
                 var forwardDirection = (new Vector3(mouseLocation.x, mouseLocation.y, mouseLocation.z) - playerLocation).normalized;

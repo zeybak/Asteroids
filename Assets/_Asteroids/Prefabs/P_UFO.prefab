@@ -46,7 +46,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6952890761629368267}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5495902117074765545, guid: d7e80648faa9d7b41a831f634f9e2900, type: 3}
 --- !u!23 &3813162250196737941
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4182549664857267553
 Rigidbody:
@@ -170,7 +170,10 @@ MonoBehaviour:
   EntityToSpawn: {fileID: 6952890761629368267, guid: 9cea1fcd739641040a7a1c9f6f279fb1, type: 3}
   SpawnRate: 1
   bShouldSpawnOnEdge: 0
+  SpawnRateDecreaseOverTime: 0
+  MinSpawnRate: 0
   LastSpawnTime: 0
+  TimeAlive: 0
 --- !u!114 &2379705780723141757
 MonoBehaviour:
   m_ObjectHideFlags: 0

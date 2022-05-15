@@ -9,8 +9,10 @@ namespace _Asteroids.Scripts.Data
         [Header("Settings")]
         public Entity BulletEntity;
         public float BulletSpeed;
-        
-        [Header("Debug")]
+        public float Ratio;
+
+        [Header("Debug")] 
+        public double LastShootingTime;
         public int BulletAnglesIndex;
         
         public static readonly Vector3[][] BulletAngles = new Vector3[][]
