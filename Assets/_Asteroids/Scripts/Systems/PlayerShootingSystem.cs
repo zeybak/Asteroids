@@ -1,4 +1,5 @@
-﻿using _Asteroids.Scripts.Data;
+﻿using _Asteroids.Scripts.Behaviours;
+using _Asteroids.Scripts.Data;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -55,6 +56,9 @@ namespace _Asteroids.Scripts.Systems
                         Angular = new float3(0, 0, 0)
                     });
                 }
+
+                PoolsManager.Instance?.Instantiate("P_PlayerShootSFX",
+                    new Vector3(playerLocation.x, playerLocation.y, playerLocation.z), Quaternion.identity);
             });
         }
     }
