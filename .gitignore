@@ -25,6 +25,9 @@
 # Rider
 .idea/
 
+# VSCode
+.vscode/
+
 # Gradle cache directory
 .gradle/
 
