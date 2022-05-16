@@ -514,6 +514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcesList:
   - P_PlayerShootSFX
+  - P_EnemyExplosionSFX
+  - P_PickupSFX
 --- !u!4 &235465577
 Transform:
   m_ObjectHideFlags: 0

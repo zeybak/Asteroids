@@ -1,15 +1,19 @@
-﻿using _Asteroids.Scripts.Data;
+﻿using _Asteroids.Scripts.Behaviours;
+using _Asteroids.Scripts.Data;
 using _Asteroids.Scripts.Tags;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _Asteroids.Scripts.Systems
 {
     public class DestructionSystem : ComponentSystem
     {
+        private const string EnemyDestructionSfxName = "P_EnemyExplosionSFX";
+        
         protected override void OnUpdate()
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -51,6 +55,8 @@ namespace _Asteroids.Scripts.Systems
                 Entities.ForEach((ref DestroyTag destroyTag, ref AddScoreOnDestructionData addScoreOnDestructionData) =>
                 {
                     Score.CurrentScore += addScoreOnDestructionData.ScoreToAdd;
+
+                    PoolsManager.Instance?.Instantiate(EnemyDestructionSfxName, Vector3.zero, Quaternion.identity);
                 });
                 
                 Entities.ForEach((Entity entity, ref DestroyTag destroyTag) =>

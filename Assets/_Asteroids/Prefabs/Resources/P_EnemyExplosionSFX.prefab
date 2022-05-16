@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1401600281669317738}
   - component: {fileID: 2326286878584079161}
   m_Layer: 0
-  m_Name: P_PlayerShootSFX
+  m_Name: P_EnemyExplosionSFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b0406d6bc0866054fabf446a9a750040, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b9bf9e3fe2d2ecb469de4fd9defac5dc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

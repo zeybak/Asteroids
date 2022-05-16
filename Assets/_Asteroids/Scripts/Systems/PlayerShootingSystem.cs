@@ -11,6 +11,7 @@ namespace _Asteroids.Scripts.Systems
     public class PlayerShootingSystem : ComponentSystem
     {
         private const string FireInputName = "Fire1";
+        private const string ShootSfxName = "P_PlayerShootSFX";
         private Camera _camera;
 
         protected override void OnStartRunning()
@@ -57,8 +58,7 @@ namespace _Asteroids.Scripts.Systems
                     });
                 }
 
-                PoolsManager.Instance?.Instantiate("P_PlayerShootSFX",
-                    new Vector3(playerLocation.x, playerLocation.y, playerLocation.z), Quaternion.identity);
+                PoolsManager.Instance?.Instantiate(ShootSfxName, Vector3.zero, Quaternion.identity);
             });
         }
     }

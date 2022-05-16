@@ -2,16 +2,20 @@
 using _Asteroids.Scripts.Data;
 using _Asteroids.Scripts.Tags;
 using Unity.Entities;
+using UnityEngine;
 
 namespace _Asteroids.Scripts.Systems
 {
     [UpdateBefore(typeof(DestructionSystem))]
     public class PickupsRewardSystem : ComponentSystem
     {
+        private const string RewardSfxName = "P_PickupSFX";
+        
         protected override void OnUpdate()
         {
             var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             var playerEntity = PlayerSpawner.PlayerEntity;
+            var bWasAnyRewardGranted = false;
             
             if (playerEntity.Equals(Entity.Null)) return;
 
@@ -25,6 +29,8 @@ namespace _Asteroids.Scripts.Systems
                 var playerLivesData = entityManager.GetComponentData<PlayerLivesData>(playerEntity);
                 playerLivesData.InvulnerabilityTimeRemaining += invulnerabilityShieldPickupData.Duration;
                 entityManager.SetComponentData(playerEntity, playerLivesData);
+
+                bWasAnyRewardGranted = true;
             });
 
             Entities.ForEach((ref DestroyTag destroyTag, ref ProjectileSplitPickupTag projectileSplitPickupTag,
@@ -41,6 +47,8 @@ namespace _Asteroids.Scripts.Systems
                     playerShootingData.BulletAnglesIndex = PlayerShootingData.BulletAngles.Length - 1;
                 
                 entityManager.SetComponentData(playerEntity, playerShootingData);
+                
+                bWasAnyRewardGranted = true;
             });
             
             Entities.ForEach((ref DestroyTag destroyTag, ref LifePickupTag lifePickupTag, ref LifeSpanData lifeSpanData) =>
@@ -52,7 +60,12 @@ namespace _Asteroids.Scripts.Systems
                 var playerLivesData = entityManager.GetComponentData<PlayerLivesData>(playerEntity);
                 playerLivesData.LivesLeft++;
                 entityManager.SetComponentData(playerEntity, playerLivesData);
+                
+                bWasAnyRewardGranted = true;
             });
+
+            if (bWasAnyRewardGranted)
+                PoolsManager.Instance?.Instantiate(RewardSfxName, Vector3.zero, Quaternion.identity);
         }
     }
 }
