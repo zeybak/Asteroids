@@ -1,0 +1,24 @@
+@startuml
+
+package Player
+{
+    object Systems
+    object Entities
+}
+
+Entities : AllyTag
+Entities : PlayerLivesData
+Entities : PlayerMovementData
+Entities : PlayerShootingData
+
+Systems : PlayerAimingSystem
+Systems : PlayerHyperSpaceSystem
+Systems : PlayerInvulnerabilitySystem
+Systems : PlayerMovementSystem
+Systems : PlayerShootingSystem
+Systems : PickupsRewardSystem
+Systems : CollisionsDetectionSystem
+Systems : EdgeDetectionSystem
+Systems : DestructionSystem
+
+@enduml

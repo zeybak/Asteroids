@@ -1,0 +1,20 @@
+﻿@startuml
+
+package UFO
+{
+    object Systems
+    object Entities
+}
+
+Entities : EnemyTag
+Entities : ConstantMovementSpeedData
+Entities : AddScoreOnDestructionData
+Entities : SpawnOverTimeData
+
+Systems : ConstantMovementSpeedSystem
+Systems : CollisionsDetectionSystem
+Systems : SpawnOverTimeSystem
+Systems : EdgeDetectionSystem
+Systems : DestructionSystem
+
+@enduml

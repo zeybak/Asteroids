@@ -1,0 +1,23 @@
+﻿@startuml
+
+package Pickups
+{
+    object Systems
+    object Entities
+}
+
+Entities : PickupTag
+Entities : LifePickupTag
+Entities : ProjectileSplitPickupTag
+Entities : ConstantMovementSpeedData
+Entities : InvulnerabilityShieldPickupData
+Entities : LifeSpanData
+
+Systems : PickupsRewardSystem
+Systems : LifeSpanSystem
+Systems : ConstantMovementSpeedSystem
+Systems : CollisionsDetectionSystem
+Systems : EdgeDetectionSystems
+Systems : DestructionSystem
+
+@enduml

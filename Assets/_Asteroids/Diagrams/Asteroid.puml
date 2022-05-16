@@ -1,0 +1,19 @@
+﻿@startuml
+
+package Asteroids
+{
+    object Systems
+    object Entities
+}
+
+Entities : EnemyTag
+Entities : AddScoreOnDestructionData
+Entities : ConstantMovementSpeedData
+Entities : SpawnOnDestructionData
+
+Systems : ConstantMovementSpeedSystem
+Systems : CollisionsDetectionSystem
+Systems : EdgeDetectionSystem
+Systems : DestructionSystem
+
+@enduml
